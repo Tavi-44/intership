@@ -6,14 +6,21 @@ import numpy as np
 st.set_page_config(page_title="Trader Performance Dashboard", layout="wide")
 st.title("📊 Trader Performance vs Market Sentiment")
 @st.cache_data
-def load_data():
-    uploaded_file = st.file_uploader("Upload your merged CSV", type=["csv"])
-    if uploaded_file is not None:
-        df = pd.read_csv(uploaded_file)
-        return df
-    else:
-        st.warning("Please upload the CSV to continue!")
-        return None
+# Step 1: File uploader outside cached function
+uploaded_file = st.file_uploader("Upload your merged CSV", type=["csv"])
+
+# Step 2: Load CSV using cache (optional) only if uploaded_file is present
+@st.cache_data
+def load_data(file):
+    df = pd.read_csv(file)
+    return df
+
+if uploaded_file is not None:
+    df = load_data(uploaded_file)
+    df = df.dropna(subset=['sentiment'])
+    st.write(df.head())
+else:
+    st.warning("Please upload the CSV to continue!")
 df = load_data()
 df = df.dropna(subset=['sentiment'])
 st.sidebar.header("Filters")
