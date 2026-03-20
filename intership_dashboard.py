@@ -6,9 +6,6 @@ import numpy as np
 st.set_page_config(page_title="Trader Performance Dashboard", layout="wide")
 st.title("📊 Trader Performance vs Market Sentiment")
 @st.cache_data
-st.set_page_config(page_title="📊 Trader Performance vs Market Sentiment", layout="wide")
-st.title("📊 Trader Performance vs Market Sentiment")
-
 # 1️⃣ File uploader (outside any cached function)
 uploaded_file = st.file_uploader("Upload your merged CSV", type=["csv"])
 
