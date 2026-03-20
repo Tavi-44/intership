@@ -3,14 +3,10 @@ import gdown
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-st.set_page_config(page_title="Trader Performance Dashboard", layout="wide")
-st.title("📊 Trader Performance vs Market Sentiment")
-@st.cache_data
 # Set page config (emoji hata diya temporary)
 st.set_page_config(page_title="Trader Performance Dashboard", layout="wide")
 
 st.title("Trader Performance vs Market Sentiment")
-
 # 1️⃣ File uploader (outside any cached function)
 uploaded_file = st.file_uploader("Upload your merged CSV", type=["csv"])
 
