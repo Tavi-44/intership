@@ -6,19 +6,29 @@ import numpy as np
 st.set_page_config(page_title="Trader Performance Dashboard", layout="wide")
 st.title("📊 Trader Performance vs Market Sentiment")
 @st.cache_data
-# Step 1: File uploader outside cached function
+st.set_page_config(page_title="📊 Trader Performance vs Market Sentiment", layout="wide")
+st.title("📊 Trader Performance vs Market Sentiment")
+
+# 1️⃣ File uploader (outside any cached function)
 uploaded_file = st.file_uploader("Upload your merged CSV", type=["csv"])
 
-# Step 2: Load CSV using cache (optional) only if uploaded_file is present
+# 2️⃣ Load data (optional caching for large CSV)
 @st.cache_data
 def load_data(file):
     df = pd.read_csv(file)
     return df
 
+# 3️⃣ Check if file is uploaded
 if uploaded_file is not None:
-    df = load_data(uploaded_file)
-    df = df.dropna(subset=['sentiment'])
-    st.write(df.head())
+    df = load_data(uploaded_file)   # load CSV
+    df = df.dropna(subset=['sentiment'])  # drop rows with missing sentiment
+    st.write(df.head())  # show first 5 rows
+    
+    # 4️⃣ Your dashboard plots / analysis can go here
+    # Example:
+    st.subheader("Sentiment distribution")
+    st.bar_chart(df['sentiment'].value_counts())
+    
 else:
     st.warning("Please upload the CSV to continue!")
 df = load_data()
