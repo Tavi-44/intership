@@ -7,12 +7,13 @@ st.set_page_config(page_title="Trader Performance Dashboard", layout="wide")
 st.title("📊 Trader Performance vs Market Sentiment")
 @st.cache_data
 def load_data():
-    file_id = "1T3oKb46tkYlXOTEUrY3UvoAcPIYZy6g7"
-    url = f"https://drive.google.com/uc?id={file_id}"
-    output = "merged_data.csv"
-    gdown.download(url, output, quiet=False)
-    df = pd.read_csv(output)
-    return df
+    uploaded_file = st.file_uploader("Upload your merged CSV", type=["csv"])
+    if uploaded_file is not None:
+        df = pd.read_csv(uploaded_file)
+        return df
+    else:
+        st.warning("Please upload the CSV to continue!")
+        return None
 df = load_data()
 df = df.dropna(subset=['sentiment'])
 st.sidebar.header("Filters")
